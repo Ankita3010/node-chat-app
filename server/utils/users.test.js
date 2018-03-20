@@ -78,4 +78,21 @@ describe ('Users', () => {
     expect(userList).toEqual(['Joey']);
   });
 
+  it('should return name if present', () => {
+    var user = users.getUserName('Joey');
+
+    expect(user.name).toEqual('Joey');
+  });
+
+  it('should not return name if not present', () => {
+    var user = users.getUserName('Jill');
+
+    expects(user).to.not.exist;
+  });
+  it('should return room list', () => {
+    var rooms = users.getRoomList();
+
+    expect(rooms.length).toBe(2);
+    expects(rooms).to.include('Yoga', 'Zumba');
+  })
 })

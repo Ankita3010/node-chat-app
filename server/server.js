@@ -19,10 +19,20 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
   console.log("New user connected");
 
+  var roomList = users.getRoomList();
+  socket.emit('show', roomList);
+// ) => {
+//     console.log('Sent from server');
+//   });
+
   socket.on('join', (params, callback) => {
+    params.room = params.room.toUpperCase();
     if(!isRealString(params.name) || !isRealString(params.room)) {
       return callback('Name and Room name are required.');
-    }
+    };
+    if(users.getUserName(params.name)) {
+      return callback('Name already taken. Please choose a different name.');
+    };
 
     socket.join(params.room);
     users.removeUser(socket.id);
